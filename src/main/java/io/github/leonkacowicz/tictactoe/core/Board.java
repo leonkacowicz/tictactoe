@@ -30,6 +30,6 @@ public class Board {
     }
 
     public BoardState getBoardState() {
-        return null;
+        return BoardState.NOT_FINISHED;
     }
 }
