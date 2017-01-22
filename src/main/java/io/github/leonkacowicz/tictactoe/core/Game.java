@@ -43,7 +43,7 @@ public class Game {
     }
 
     protected boolean isMoveValid(Move move) {
-        return true;
+        return board.getCellState(move.row, move.column) == CellState.BLANK;
     }
 
 }

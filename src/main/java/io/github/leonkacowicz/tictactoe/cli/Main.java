@@ -1,5 +1,6 @@
 package io.github.leonkacowicz.tictactoe.cli;
 
+import io.github.leonkacowicz.tictactoe.ai.RandomPlayer;
 import io.github.leonkacowicz.tictactoe.core.Board;
 import io.github.leonkacowicz.tictactoe.core.Game;
 import io.github.leonkacowicz.tictactoe.core.Player;
@@ -12,7 +13,7 @@ public class Main {
         Board board = new Board(3);
         PrintWriter printer = new PrintWriter(System.out);
         Player p1 = new CliPlayer();
-        Player p2 = new CliPlayer();
+        Player p2 = new RandomPlayer();
         Game game = new Game(board, p1, p2);
         String result = game.runGame().name();
         board.printBoard(printer);
