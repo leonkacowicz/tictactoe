@@ -152,5 +152,6 @@ public class Board {
         printer.print(map[board[row][col].ordinal()]);
         printer.print(' ');
         printer.println();
+        printer.flush();
     }
 }
