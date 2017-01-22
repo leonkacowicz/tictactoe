@@ -97,7 +97,12 @@ public class BoardTest {
     @Test
     public void test_getBoardState() throws Exception {
         Board board = new Board(3);
-
         Assert.assertEquals(BoardState.NOT_FINISHED, board.getBoardState());
+
+        board = new Board(3);
+        board.cellStates[0][0] = CellState.CIRCLE;
+        board.cellStates[1][1] = CellState.CIRCLE;
+        board.cellStates[2][2] = CellState.CIRCLE;
+        Assert.assertEquals(BoardState.CIRCLE_WINS, board.getBoardState());
     }
 }
