@@ -28,4 +28,8 @@ public class Board {
     public int size() {
         return cellStates.length;
     }
+
+    public BoardState getBoardState() {
+        return null;
+    }
 }

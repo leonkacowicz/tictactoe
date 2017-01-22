@@ -93,4 +93,11 @@ public class BoardTest {
 
         Assert.assertEquals(4, board.size());
     }
+
+    @Test
+    public void test_getBoardState() throws Exception {
+        Board board = new Board(3);
+
+        Assert.assertEquals(BoardState.NOT_FINISHED, board.getBoardState());
+    }
 }
