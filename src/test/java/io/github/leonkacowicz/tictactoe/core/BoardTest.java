@@ -65,6 +65,12 @@ public class BoardTest {
         Assert.assertEquals(CellState.CIRCLE, board.cellStates[1][1]);
     }
 
+    /**
+     * Given: a board with a known state
+     * When: getCellState is called
+     * Then: it returns the right value
+     * @throws Exception
+     */
     @Test
     public void test_getCellState() throws Exception {
 
@@ -79,5 +85,12 @@ public class BoardTest {
         Assert.assertEquals(CellState.BLANK, board.getCellState(1, 0));
         Assert.assertEquals(CellState.CIRCLE, board.getCellState(1, 1));
 
+    }
+
+    @Test
+    public void test_size() throws Exception {
+        Board board = new Board(4);
+
+        Assert.assertEquals(4, board.size());
     }
 }
