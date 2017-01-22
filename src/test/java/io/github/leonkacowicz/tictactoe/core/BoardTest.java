@@ -64,4 +64,20 @@ public class BoardTest {
         Assert.assertEquals(CellState.BLANK, board.cellStates[1][0]);
         Assert.assertEquals(CellState.CIRCLE, board.cellStates[1][1]);
     }
+
+    @Test
+    public void test_getCellState() throws Exception {
+
+        Board board = new Board(2);
+        board.cellStates[0][0] = CellState.CIRCLE;
+        board.cellStates[0][1] = CellState.CROSS;
+        board.cellStates[1][0] = CellState.BLANK;
+        board.cellStates[1][1] = CellState.CIRCLE;
+
+        Assert.assertEquals(CellState.CIRCLE, board.getCellState(0, 0));
+        Assert.assertEquals(CellState.CROSS, board.getCellState(0, 1));
+        Assert.assertEquals(CellState.BLANK, board.getCellState(1, 0));
+        Assert.assertEquals(CellState.CIRCLE, board.getCellState(1, 1));
+
+    }
 }
