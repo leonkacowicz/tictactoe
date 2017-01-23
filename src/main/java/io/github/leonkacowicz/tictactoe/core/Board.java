@@ -107,10 +107,11 @@ public class Board {
         hasCross = false;
 
         for (int i = 0; i < n; i++) {
-            allCircle = allCircle && (board[i][i] == CIRCLE);
-            allCross = allCross && (board[i][i] == CROSS);
-            hasCircle = hasCircle || (board[i][i] == CIRCLE);
-            hasCross = hasCross || (board[i][i] == CROSS);
+            int j = n - i - 1;
+            allCircle = allCircle && (board[i][j] == CIRCLE);
+            allCross = allCross && (board[i][j] == CROSS);
+            hasCircle = hasCircle || (board[i][j] == CIRCLE);
+            hasCross = hasCross || (board[i][j] == CROSS);
         }
 
         if (allCircle) return CIRCLE_WINS;
