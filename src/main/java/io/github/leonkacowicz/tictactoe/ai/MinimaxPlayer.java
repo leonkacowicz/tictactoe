@@ -2,6 +2,7 @@ package io.github.leonkacowicz.tictactoe.ai;
 
 import io.github.leonkacowicz.tictactoe.core.*;
 
+import java.io.PrintWriter;
 import java.util.List;
 
 import static io.github.leonkacowicz.tictactoe.core.BoardState.CIRCLE_WINS;
@@ -36,40 +37,34 @@ public class MinimaxPlayer implements Player {
         return bestMoveOut[0];
     }
 
-    protected int getBoardScore(Board board, CellState turn, int depth, Move[] bestMoveOut) {
+    protected double getBoardScore(Board board, CellState turn, double depth, Move[] bestMoveOut) {
+        boolean debug = false;
+        if (debug) System.out.println("Depth " + depth);
+        if (debug) board.printBoard(new PrintWriter(System.out));
         BoardState boardState = board.getBoardState();
-        if (boardState == CIRCLE_WINS && turn == CIRCLE) return 1;
-        if (boardState == CIRCLE_WINS && turn == CROSS) return -1;
-        if (boardState == CROSS_WINS && turn == CIRCLE) return -1;
-        if (boardState == CROSS_WINS && turn == CROSS) return 1;
+        if (boardState == CIRCLE_WINS && turn == CIRCLE) return 1.0 / depth;
+        if (boardState == CIRCLE_WINS && turn == CROSS) return -1.0 / depth;
+        if (boardState == CROSS_WINS && turn == CIRCLE) return -1.0 / depth;
+        if (boardState == CROSS_WINS && turn == CROSS) return 1.0 / depth;
         if (depth >= maxSteps) return 0;
 
         List<Move> validMoves = board.getValidMoves();
+        if (debug) System.out.println("Turn = " + turn + ", valid moves: " + validMoves);
         Move bestMove = null;
-        int best;
-        if (turn == CIRCLE) {
-            best = -10;
-            for (Move move : validMoves) {
-                board.setCellState(move.row, move.column, turn);
-                int trial = -getBoardScore(board, CROSS, depth + 1, null);
-                if (trial > best) {
-                    best = trial;
-                    bestMove = move;
-                }
-                board.setCellState(move.row, move.column, BLANK);
+        double best;
+        best = -Double.MAX_VALUE;
+        for (Move move : validMoves) {
+            if (debug) System.out.println("Trying " + move);
+            board.setCellState(move.row, move.column, turn);
+            double trial = -1.0 * getBoardScore(board, (turn == CIRCLE) ? CROSS : CIRCLE, depth + 1.0D, null);
+            if (trial > best) {
+                if (debug) System.out.println("Got new best");
+                best = trial;
+                bestMove = move;
             }
-        } else {
-            best = 10;
-            for (Move move : validMoves) {
-                board.setCellState(move.row, move.column, turn);
-                int trial = -getBoardScore(board, CIRCLE, depth + 1, null);
-                if (trial < best) {
-                    best = trial;
-                    bestMove = move;
-                }
-                board.setCellState(move.row, move.column, BLANK);
-            }
+            board.setCellState(move.row, move.column, BLANK);
         }
+
         if (bestMoveOut != null) {
             bestMoveOut[0] = bestMove;
             System.out.println("Best move = " + bestMove);
