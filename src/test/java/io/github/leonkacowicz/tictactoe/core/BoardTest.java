@@ -137,6 +137,12 @@ public class BoardTest {
         board.board[1][0] = CIRCLE;  board.board[1][1] = CROSS; board.board[1][2] = CROSS;
         board.board[2][0] = CIRCLE; board.board[2][1] = CROSS;  board.board[2][2] = CROSS;
         Assert.assertEquals(BoardState.CROSS_WINS, board.getBoardState());
+
+        board = new Board(3);
+        board.board[0][0] = CIRCLE; board.board[0][1] = CIRCLE;  board.board[0][2] = CROSS;
+        board.board[1][0] = CIRCLE;  board.board[1][1] = CROSS; board.board[1][2] = BLANK;
+        board.board[2][0] = CROSS; board.board[2][1] = BLANK;  board.board[2][2] = BLANK;
+        Assert.assertEquals(BoardState.CROSS_WINS, board.getBoardState());
     }
 
     @Test

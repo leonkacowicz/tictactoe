@@ -100,7 +100,7 @@ public class Board {
         if (hasCircle && hasCross) ++impossibleDiag;
 
 
-        // main diagonal
+        // secondary diagonal
         allCircle = true;
         hasCircle = false;
         allCross = true;
