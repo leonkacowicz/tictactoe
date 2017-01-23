@@ -1,6 +1,9 @@
 package io.github.leonkacowicz.tictactoe.core;
 
 import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
 
 import static io.github.leonkacowicz.tictactoe.core.BoardState.CIRCLE_WINS;
 import static io.github.leonkacowicz.tictactoe.core.BoardState.CROSS_WINS;
@@ -19,7 +22,7 @@ public class Board {
 
         for (int i = 0; i < n; i++) {
             for (int j = 0; j < n; j++) {
-                board[i][j] = CellState.BLANK;
+                board[i][j] = BLANK;
             }
         }
     }
@@ -117,6 +120,19 @@ public class Board {
 
         if (impossibleRows == n && impossibleColumns == n && impossibleDiag == 2) return DRAW;
         return BoardState.NOT_FINISHED;
+    }
+
+    public List<Move> getValidMoves() {
+        int size = board.length;
+        List<Move> validMoves = new ArrayList<>();
+        for (int i = 0; i < size; i++) {
+            for (int j = 0; j < size; j++) {
+                if (board[i][j] == BLANK)
+                    validMoves.add(new Move(i, j));
+            }
+        }
+
+        return validMoves;
     }
 
     public void printBoard(PrintWriter printer) {

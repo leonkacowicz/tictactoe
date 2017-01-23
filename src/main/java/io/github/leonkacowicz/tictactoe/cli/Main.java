@@ -1,11 +1,15 @@
 package io.github.leonkacowicz.tictactoe.cli;
 
+import io.github.leonkacowicz.tictactoe.ai.MinimaxPlayer;
 import io.github.leonkacowicz.tictactoe.ai.RandomPlayer;
 import io.github.leonkacowicz.tictactoe.core.Board;
+import io.github.leonkacowicz.tictactoe.core.CellState;
 import io.github.leonkacowicz.tictactoe.core.Game;
 import io.github.leonkacowicz.tictactoe.core.Player;
 
 import java.io.PrintWriter;
+
+import static io.github.leonkacowicz.tictactoe.core.CellState.CIRCLE;
 
 public class Main {
     public static void main(String[] args) {
@@ -13,7 +17,7 @@ public class Main {
         Board board = new Board(3);
         PrintWriter printer = new PrintWriter(System.out);
         Player p1 = new CliPlayer();
-        Player p2 = new RandomPlayer();
+        Player p2 = new MinimaxPlayer(20, CIRCLE);
         Game game = new Game(board, p1, p2);
         String result = game.runGame().name();
         board.printBoard(printer);
