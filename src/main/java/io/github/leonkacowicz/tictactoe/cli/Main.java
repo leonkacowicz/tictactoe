@@ -10,14 +10,16 @@ import io.github.leonkacowicz.tictactoe.core.Player;
 import java.io.PrintWriter;
 
 import static io.github.leonkacowicz.tictactoe.core.CellState.CIRCLE;
+import static io.github.leonkacowicz.tictactoe.core.CellState.CROSS;
 
 public class Main {
     public static void main(String[] args) {
         System.out.println("Tic Tac Toe - v0.1");
-        Board board = new Board(3);
+        Board board = new Board(8);
         PrintWriter printer = new PrintWriter(System.out);
-        Player p1 = new CliPlayer();
-        Player p2 = new MinimaxPlayer(20, CIRCLE);
+        Player p1 = new RandomPlayer();
+        //Player p1 = new MinimaxPlayer(2, CROSS);
+        Player p2 = new MinimaxPlayer(8, CIRCLE);
         Game game = new Game(board, p1, p2);
         String result = game.runGame().name();
         board.printBoard(printer);

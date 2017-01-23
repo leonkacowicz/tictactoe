@@ -13,8 +13,8 @@ public class CliPlayer implements Player {
 
     @Override
     public Move getNextMove(Board board) {
-
         board.printBoard(printer);
+        System.out.println("Type your move: ");
         int n = new Scanner(System.in).nextInt();
         int row = board.size() - (n - 1) / board.size() - 1;
         int col = (n - 1) % board.size();

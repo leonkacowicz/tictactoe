@@ -32,6 +32,8 @@ public class MinimaxPlayer implements Player {
 
     @Override
     public Move getNextMove(Board board) {
+        System.out.println("Minimax: " + maxSteps);
+        board.printBoard(new PrintWriter(System.out));
         Move[] bestMoveOut = new Move[1];
         getBoardScore(board, marker, 0, bestMoveOut);
         return bestMoveOut[0];
@@ -42,13 +44,19 @@ public class MinimaxPlayer implements Player {
         if (debug) System.out.println("Depth " + depth);
         if (debug) board.printBoard(new PrintWriter(System.out));
         BoardState boardState = board.getBoardState();
-        if (boardState == CIRCLE_WINS && turn == CIRCLE) return 1.0 / depth;
-        if (boardState == CIRCLE_WINS && turn == CROSS) return -1.0 / depth;
-        if (boardState == CROSS_WINS && turn == CIRCLE) return -1.0 / depth;
-        if (boardState == CROSS_WINS && turn == CROSS) return 1.0 / depth;
-        if (depth >= maxSteps) return 0;
+        if (boardState == CIRCLE_WINS && turn == CIRCLE) return maxSteps / depth;
+        if (boardState == CIRCLE_WINS && turn == CROSS) return -maxSteps / depth;
+        if (boardState == CROSS_WINS && turn == CIRCLE) return -maxSteps / depth;
+        if (boardState == CROSS_WINS && turn == CROSS) return maxSteps / depth;
+        if (depth >= maxSteps) return .001 * (Math.random() - .5);
 
         List<Move> validMoves = board.getValidMoves();
+        if (validMoves.size() == 0) {
+            return 0.0;
+        }
+        if (validMoves.size() > 10) {
+            depth = Math.max(maxSteps - 4, depth);
+        }
         if (debug) System.out.println("Turn = " + turn + ", valid moves: " + validMoves);
         Move bestMove = null;
         double best;
@@ -66,6 +74,10 @@ public class MinimaxPlayer implements Player {
         }
 
         if (bestMoveOut != null) {
+            if (bestMove == null) {
+                System.out.println("best: " + best);
+                throw new IllegalStateException();
+            }
             bestMoveOut[0] = bestMove;
             System.out.println("Best move = " + bestMove);
         }
