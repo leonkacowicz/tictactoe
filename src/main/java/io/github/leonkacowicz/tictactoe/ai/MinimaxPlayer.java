@@ -39,6 +39,70 @@ public class MinimaxPlayer implements Player {
         return bestMoveOut[0];
     }
 
+    protected double heuristic(Board board, CellState turn) {
+
+        double circleScore = 0;
+        double crossScore = 0;
+        double circleTrial = 0;
+        double crossTrial = 0;
+        int n = board.size();
+        // row
+        for (int i = 0; i < n; i++) {
+            circleTrial = 0;
+            for (int j = 0; j < n; j++) {
+                if (board.getCellState(i, j) == CROSS) {
+                    circleTrial = 0;
+                    break;
+                } else {
+                    circleTrial += 1;
+                }
+            }
+            crossTrial = 0;
+            for (int j = 0; j < n; j++) {
+                if (board.getCellState(i, j) == CIRCLE) {
+                    crossTrial = 0;
+                    break;
+                } else {
+                    crossTrial += 1;
+                }
+            }
+        }
+        if (circleTrial > circleScore) circleScore = circleTrial;
+        if (crossTrial > crossScore) crossScore = crossTrial;
+
+        // col
+        for (int i = 0; i < n; i++) {
+            circleTrial = 0;
+            for (int j = 0; j < n; j++) {
+                if (board.getCellState(j, i) == CROSS) {
+                    circleTrial = 0;
+                    break;
+                } else {
+                    circleTrial += 1;
+                }
+            }
+            crossTrial = 0;
+            for (int j = 0; j < n; j++) {
+                if (board.getCellState(j, i) == CIRCLE) {
+                    crossTrial = 0;
+                    break;
+                } else {
+                    crossTrial += 1;
+                }
+            }
+        }
+        if (circleTrial > circleScore) circleScore = circleTrial;
+        if (crossTrial > crossScore) crossScore = crossTrial;
+
+        if (turn == CIRCLE) {
+            if (circleScore > crossScore) return circleScore / n;
+            else return -crossScore / n;
+        } else {
+            if (circleScore > crossScore) return -circleScore / n;
+            else return crossScore / n;
+        }
+    }
+
     protected double getBoardScore(Board board, CellState turn, double depth, Move[] bestMoveOut) {
         boolean debug = false;
         if (debug) System.out.println("Depth " + depth);
@@ -48,14 +112,14 @@ public class MinimaxPlayer implements Player {
         if (boardState == CIRCLE_WINS && turn == CROSS) return -maxSteps / depth;
         if (boardState == CROSS_WINS && turn == CIRCLE) return -maxSteps / depth;
         if (boardState == CROSS_WINS && turn == CROSS) return maxSteps / depth;
-        if (depth >= maxSteps) return .001 * (Math.random() - .5);
+        if (depth >= maxSteps) return heuristic(board, turn);
 
         List<Move> validMoves = board.getValidMoves();
         if (validMoves.size() == 0) {
             return 0.0;
         }
         if (validMoves.size() > 10) {
-            depth = Math.max(maxSteps - 4, depth);
+            depth = Math.max(maxSteps - 10, depth);
         }
         if (debug) System.out.println("Turn = " + turn + ", valid moves: " + validMoves);
         Move bestMove = null;
