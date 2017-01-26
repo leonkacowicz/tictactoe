@@ -15,11 +15,12 @@ import static io.github.leonkacowicz.tictactoe.core.CellState.CROSS;
 public class Main {
     public static void main(String[] args) {
         System.out.println("Tic Tac Toe - v0.1");
-        Board board = new Board(4);
+        Board board = new Board(3);
         PrintWriter printer = new PrintWriter(System.out);
-        Player p1 = new RandomPlayer();
+        Player p1 = new CliPlayer();
+        //Player p1 = new RandomPlayer();
         //Player p1 = new MinimaxPlayer(2, CROSS);
-        Player p2 = new MinimaxPlayer(6, CIRCLE);
+        Player p2 = new MinimaxPlayer(9, CIRCLE);
         Game game = new Game(board, p1, p2);
         String result = game.runGame().name();
         board.printBoard(printer);

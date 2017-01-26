@@ -108,10 +108,22 @@ public class MinimaxPlayer implements Player {
         if (debug) System.out.println("Depth " + depth);
         if (debug) board.printBoard(new PrintWriter(System.out));
         BoardState boardState = board.getBoardState();
-        if (boardState == CIRCLE_WINS && turn == CIRCLE) return maxSteps / depth;
-        if (boardState == CIRCLE_WINS && turn == CROSS) return -maxSteps / depth;
-        if (boardState == CROSS_WINS && turn == CIRCLE) return -maxSteps / depth;
-        if (boardState == CROSS_WINS && turn == CROSS) return maxSteps / depth;
+        if (boardState == CIRCLE_WINS && turn == CIRCLE) {
+            if (debug) System.out.println("[circle wins]");
+            return 100 * maxSteps / depth;
+        }
+        if (boardState == CIRCLE_WINS && turn == CROSS) {
+            if (debug) System.out.println("[circle wins]");
+            return -100 * maxSteps / depth;
+        }
+        if (boardState == CROSS_WINS && turn == CIRCLE) {
+            if (debug) System.out.println("[cross wins]");
+            return -100 * maxSteps / depth;
+        }
+        if (boardState == CROSS_WINS && turn == CROSS) {
+            if (debug) System.out.println("[cross wins]");
+            return 100 * maxSteps / depth;
+        }
         if (depth >= maxSteps) return heuristic(board, turn);
 
         List<Move> validMoves = board.getValidMoves();
@@ -130,7 +142,7 @@ public class MinimaxPlayer implements Player {
             board.setCellState(move.row, move.column, turn);
             double trial = -1.0 * getBoardScore(board, (turn == CIRCLE) ? CROSS : CIRCLE, depth + 1.0D, null);
             if (trial > best) {
-                if (debug) System.out.println("Got new best");
+                if (debug) System.out.println("Got new best: " + trial);
                 best = trial;
                 bestMove = move;
             }
