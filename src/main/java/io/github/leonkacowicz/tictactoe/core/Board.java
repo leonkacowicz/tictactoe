@@ -133,6 +133,16 @@ public class Board {
             }
         }
 
+        // Shuffle the list of possible moves.
+        Random r = new Random();
+        for (int i = 0; i < validMoves.size() * 3; i++) {
+            int p = r.nextInt(validMoves.size());
+            int q = r.nextInt(validMoves.size());
+            Move tmp = validMoves.get(p);
+            validMoves.set(p, validMoves.get(q));
+            validMoves.set(q, tmp);
+        }
+
         return validMoves;
     }
 
